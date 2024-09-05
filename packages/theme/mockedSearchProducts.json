@@ -1,0 +1,144 @@
+{
+  "providers":[
+    {
+      "name": "Meet",
+      "by": "Google",
+      "distance":4.2,
+      "products": [
+        {
+          "_id": "38143c0c-c9b0-448c-93cd-60eb90d8da57",
+          "_slug": "aspesi-shirt-h805-white",
+          "_name": "Shirt Aspesi white M",
+          "images": [
+            {
+              "url": "https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg"
+            }
+          ],
+          "price": {
+            "value": {
+              "centAmount": 16625
+            }
+          },
+          "_rating": {
+            "averageRating": 4
+          }
+        },
+        {
+          "_id": "38143c0c-c9b0-448c-93cd-60eb90d8da57",
+          "_slug": "aspesi-shirt-h805-white",
+          "_name": "Shirt Aspesi white M",
+          "images": [
+            {
+              "url": "https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg"
+            }
+          ],
+          "price": {
+            "value": {
+              "centAmount": 16625
+            }
+          },
+          "_rating": {
+            "averageRating": 4
+          }
+        },
+        {
+          "_id": "38143c0c-c9b0-448c-93cd-60eb90d8da57",
+          "_slug": "aspesi-shirt-h805-white",
+          "_name": "Shirt Aspesi white M",
+          "images": [
+            {
+              "url": "https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg"
+            }
+          ],
+          "price": {
+            "value": {
+              "centAmount": 16625
+            }
+          },
+          "_rating": {
+            "averageRating": 4
+          }
+        },
+        {
+          "_id": "38143c0c-c9b0-448c-93cd-60eb90d8da57",
+          "_slug": "aspesi-shirt-h805-white",
+          "_name": "Shirt Aspesi white M",
+          "images": [
+            {
+              "url": "https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg"
+            }
+          ],
+          "price": {
+            "value": {
+              "centAmount": 16625
+            }
+          },
+          "_rating": {
+            "averageRating": 4
+          }
+        },
+        {
+          "_id": "38143c0c-c9b0-448c-93cd-60eb90d8da57",
+          "_slug": "aspesi-shirt-h805-white",
+          "_name": "Shirt Aspesi white M",
+          "images": [
+            {
+              "url": "https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg"
+            }
+          ],
+          "price": {
+            "value": {
+              "centAmount": 16625
+            }
+          },
+          "_rating": {
+            "averageRating": 4
+          }
+        },
+        {
+          "_id": "38143c0c-c9b0-448c-93cd-60eb90d8da57",
+          "_slug": "aspesi-shirt-h805-white",
+          "_name": "Shirt Aspesi white M",
+          "images": [
+            {
+              "url": "https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg"
+            }
+          ],
+          "price": {
+            "value": {
+              "centAmount": 16625
+            }
+          },
+          "_rating": {
+            "averageRating": 4
+          }
+        }
+      ]
+    },
+    {
+      "name": "Meet",
+      "by": "Google",
+      "distance":4.2,
+      "products": [
+        {
+          "_id": "38143c0c-c9b0-448c-93cd-60eb90d8da57",
+          "_slug": "aspesi-shirt-h805-white",
+          "_name": "Shirt Aspesi white M",
+          "images": [
+            {
+              "url": "https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg"
+            }
+          ],
+          "price": {
+            "value": {
+              "centAmount": 16625
+            }
+          },
+          "_rating": {
+            "averageRating": 4
+          }
+        }
+      ]
+    }
+  ]
+}

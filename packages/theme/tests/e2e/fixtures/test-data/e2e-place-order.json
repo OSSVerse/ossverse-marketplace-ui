@@ -1,0 +1,26 @@
+{
+  "customer": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": {
+      "shipping": {
+        "streetName": "1 VueStorefront Rd.",
+        "apartment": "23",
+        "city": "Los Angeles",
+        "state": "California",
+        "country": "United States",
+        "zipcode": "456787",
+        "phone": "1234567890"
+      },
+      "billing": {
+        "streetName": "1 VueStorefront Rd.",
+        "apartment": "23",
+        "city": "Los Angeles",
+        "state": "California",
+        "country": "United States",
+        "zipcode": "456786",
+        "phone": "1234567890"
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+---
+- name: Install unzip
+  apt:
+    name: unzip
+
+- name: Download AWS CLI V2 Installer
+  get_url:
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: "{{ user_dir }}/awscliv2.zip"
+
+- name: Extract AWS CLI V2 Installer
+  unarchive:
+    src: "{{ user_dir }}/awscliv2.zip"
+    dest: "{{ user_dir }}"
+    remote_src: true
+
+- name: Install AWS CLI V2
+  command: ./aws/install --update
+
+- name: Create AWS CLI directory
+  file:
+    path: "{{ user_dir }}/.aws"
+    state: directory
+
+- name: Create AWS Config file
+  template:
+    src: config.j2
+    dest: "{{ user_dir }}/.aws/config"

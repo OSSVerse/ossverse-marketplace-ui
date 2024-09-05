@@ -1,0 +1,124 @@
+name: Build
+
+on: [push]
+
+jobs:
+  prepare_dependencies:
+    name: Prepare dependencies
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Running a git level clean
+        run: git clean -fdX
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Get cached dependencies
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn
+
+  test:
+    name: Test api-client and composables
+    needs: prepare_dependencies
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Get cached dependencies
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Clean yarn cache
+        run: yarn cache clean
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build api-client
+        run: yarn build:api-client
+
+      - name: Test api-client
+        run: yarn test:api-client
+
+      - name: Build composables
+        run: yarn build:composables
+
+      - name: Test composables
+        run: yarn test:composables
+
+      - name: Build theme
+        run: yarn build:theme
+
+      - name: Test theme
+        run: yarn test:theme
+
+      - name: Test e2e theme
+        env:
+          MAPS_KEY: ${{ secrets.TEST_MAPS_API_KEY }}
+        run: |
+          yarn dev > /dev/null &
+          sleep 1m
+          export PROCESS_ID=$!
+          yarn test:e2e:hl:theme
+          kill $PROCESS_ID
+
+  deploy:
+    name: package and deploy the service
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build docker image
+        uses: docker/build-push-action@v2
+        env:
+          MAPS_API_KEY: ${{ secrets.QA_MAPS_API_KEY }}
+        with:
+          load: true
+          context: .
+          push: false
+          tags: 795151977897.dkr.ecr.ap-south-1.amazonaws.com/beckn_in_a_box_storefront_ui:${{ github.run_number }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          secrets: |
+            "MAPS_API_KEY=${{ secrets.QA_MAPS_API_KEY }}"
+      - name: Cache growth workaround
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          echo $MAPS_API_KEY
+      - name: Push image to ECR
+        env:
+          MAPS_API_KEY: ${{ secrets.QA_MAPS_API_KEY }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 795151977897.dkr.ecr.ap-south-1.amazonaws.com
+          docker push 795151977897.dkr.ecr.ap-south-1.amazonaws.com/beckn_in_a_box_storefront_ui:${GITHUB_RUN_NUMBER}
+          docker rmi -f 795151977897.dkr.ecr.ap-south-1.amazonaws.com/beckn_in_a_box_storefront_ui:${GITHUB_RUN_NUMBER}
+      - name: Deploying to the BIAB servers qa using ansible
+        run: |
+          cd ansible
+          export ANSIBLE_ROLES_PATH=./roles
+          echo beckn_in_a_box_storefront_ui_build_no: ${GITHUB_RUN_NUMBER} >> vars/vars.yml
+          /home/ubuntu/.local/bin/ansible-playbook playbooks/beckn_services.yml -i inventory/qa.ini --extra-vars "@vars/vars.yml" --vault-password-file /home/ubuntu/ansible-vault/.password

@@ -1,0 +1,32 @@
+---
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Install packages that allow APT to use repository over HTTPS
+  apt:
+    name: ["apt-transport-https", "ca-certificates", "curl", "gnupg", "lsb-release"]
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Install Docker and packages it depends on
+  apt:
+    name: ["docker-ce", "docker-ce-cli", "containerd.io"]
+
+- name: Add docker group
+  command: groupadd -f docker
+
+- name: Add current user to group
+  command: usermod -aG docker $USER

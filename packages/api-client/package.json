@@ -1,0 +1,29 @@
+{
+  "name": "@vue-storefront/beckn-api",
+  "version": "2.3.0",
+  "private": true,
+  "sideEffects": false,
+  "server": "server/index.js",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.es.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "rimraf lib server && rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "prepublish": "yarn build"
+  },
+  "dependencies": {
+    "@vue-storefront/core": "^2.3.0",
+    "superagent": "^6.1.0"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/superagent": "^4.1.11"
+  }
+}

@@ -1,0 +1,14 @@
+---
+- hosts: beckn_in_a_box_storefront_ui
+  roles:
+    - { role: docker, tags: docker }
+    - { role: awscli, tags: awscli }
+    - { role: beckn_service, tags: beckn_in_a_box_storefront_ui }
+  become: yes
+  vars:
+    service_name: beckn_in_a_box_storefront_ui
+    service_description: Beckn in a box Storefront UI Service
+    expose_ports: -p 8080:8080
+    mount_points: -v {{ user_dir }}/nginx.conf:/etc/nginx/conf.d/default.conf -v /etc/apache2/.htpasswd:/etc/apache2/.htpasswd
+    environment_variables: -e MAPS_KEY={{ maps_api_key }}
+  tags: deploy_beckn_in_a_box_storefront_ui

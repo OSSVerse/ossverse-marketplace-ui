@@ -1,0 +1,6 @@
+.github
+node_modules
+.dockerfile
+README.md
+ansible
+nginx.conf.j2

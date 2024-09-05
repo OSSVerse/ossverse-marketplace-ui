@@ -1,0 +1,12 @@
+[Unit]
+Description={{ service_description }}
+
+[Service]
+TimeoutStartSec=60
+Restart=always
+ExecStart=/usr/bin/docker run {{ expose_ports }} {{ mount_points }} {{ environment_variables }} --rm --name %n {{ image_name }} 
+ExecStop=/usr/bin/docker stop %n
+
+[Install]
+WantedBy=default.target
+

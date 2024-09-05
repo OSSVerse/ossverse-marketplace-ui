@@ -1,0 +1,34 @@
+---
+- name: Get AWS Login password
+  shell: "aws ecr get-login-password"
+  register: aws_password
+  no_log: True
+
+- name: Login to AWS
+  command: "docker login --username AWS --password {{ aws_password.stdout }} {{ ecr_url }}"
+
+- name: Pull docker image
+  command: "docker pull {{ image_name }}"
+  notify:
+    - Systemctl Daemon Reload
+    - Systemctl Enable Service
+    - Restart Service
+
+- name: Create Services
+  template:
+    src: "beckn_service.j2"
+    dest: "/etc/systemd/system/{{ service_name }}.service"
+    backup: yes
+  notify:
+    - Systemctl Daemon Reload
+    - Systemctl Enable Service
+    - Restart Service
+
+- name: Substitute nginx conf
+  template:
+    src: "../../../../nginx.conf.j2"
+    dest: "{{ user_dir }}/nginx.conf"
+    backup: yes
+
+- name: Cleanup older docker images
+  ansible.builtin.shell: 'docker image prune --all --force --filter until=$(date "--date=`date` -1 DAY" +%Y-%m-%dT%H:%m)'

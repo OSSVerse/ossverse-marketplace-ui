@@ -1,0 +1,11 @@
+---
+- name: Systemctl Daemon Reload
+  shell: systemctl daemon-reload
+
+- name: Systemctl Enable Service
+  shell: "systemctl enable {{ service_name }}"
+
+- name: Restart Service
+  service:
+    name: "{{ service_name }}"
+    state: restarted

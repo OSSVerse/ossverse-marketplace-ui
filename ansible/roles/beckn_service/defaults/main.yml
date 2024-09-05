@@ -1,0 +1,7 @@
+---
+aws_account_id: 795151977897
+aws_region: ap-south-1
+image_version: "{{ beckn_in_a_box_storefront_ui_build_no }}"
+ecr_url: "{{ aws_account_id }}.dkr.ecr.{{ aws_region }}.amazonaws.com"
+image_repository: "{{ service_name }}"
+image_name: "{{ ecr_url }}/{{ image_repository }}:{{ image_version }}"
