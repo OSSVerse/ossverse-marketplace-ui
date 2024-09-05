@@ -108,28 +108,20 @@ export default {
       '@nuxtjs/firebase',
       {
         config: {
-          apiKey: 'AIzaSyAQRzHvbBiH7gutkES0ouMH5l1PDUbnqSM',
-          authDomain: 'becknauth.firebaseapp.com',
-          projectId: 'becknauth',
-          storageBucket: 'becknauth.appspot.com',
-          messagingSenderId: '267664481117',
-          appId: '1:267664481117:web:dfe76d5f9d3129386926b4>'
+          apiKey: 'AIzaSyC9hKIZNg31f8fJiLqZOy9FvScMrOTkfcY',
+          authDomain: 'ossverse-marketplace-ui.firebaseapp.com',
+          projectId: 'ossverse-marketplace-ui',
+          storageBucket: 'ossverse-marketplace-ui.appspot.com',
+          messagingSenderId: '965761563242',
+          appId: '1:965761563242:web:65bb1db22c5d057535e813',
+          measurementId: 'G-MX1XBLT4DM'
         },
         services: {
-          auth: {
-            persistence: 'local',
-            initialize: {
-              onAuthStateChangedAction: 'onAuthStateChangedAction',
-              subscribeManually: false
-            },
-            ssr: false
-          }
-          // auth: true
+          auth: true,
         }
       }
     ]
   ],
-
   i18n: {
     locales: ['en'],
     defaultLocale: 'en',

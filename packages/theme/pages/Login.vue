@@ -85,6 +85,7 @@
 
 <script>
 import { SfButton, SfIcon } from '@storefront-ui/vue';
+
 // import {state} from '../store/index.js'
 
 export default {
@@ -118,21 +119,24 @@ export default {
         });
     },
     googleLogin() {
-      /* eslint-disable no-undef */
-      const provider = new $nuxt.$fireModule.auth.GoogleAuthProvider();
+      // Create a Google Auth provider instance using $fireModule
+      const provider = new this.$fireModule.auth.GoogleAuthProvider();
       provider.addScope('email');
+
+      // Sign in with popup and handle the promise
       this.$fire.auth
         .signInWithPopup(provider)
+        .then(() => {
+          // Successfully signed in, navigate to the home page
+          this.$router.push('/');
+        })
         .catch((error) => {
+          // Handle errors and display snackbar with the error message
           this.snackbarText = error.message;
           this.snackbar = true;
-        })
-        .then(() => {
-          // we are signed in
-          // console.log("STATE1",state)
-          $nuxt.$router.push('/');
         });
     }
+
   }
 };
 </script>
