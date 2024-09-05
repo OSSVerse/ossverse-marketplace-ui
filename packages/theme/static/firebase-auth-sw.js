@@ -1,3 +1,6 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable line-comment-position */
+/* eslint-disable no-undef */
 const ignorePaths = [
   '\u002F__webpack_hmr',
   '\u002F_loading',
@@ -7,12 +10,13 @@ const ignorePaths = [
 importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js');
 firebase.initializeApp({
-  apiKey: 'AIzaSyAQRzHvbBiH7gutkES0ouMH5l1PDUbnqSM',
-  authDomain: 'becknauth.firebaseapp.com',
-  projectId: 'becknauth',
-  storageBucket: 'becknauth.appspot.com',
-  messagingSenderId: '267664481117',
-  appId: '1:267664481117:web:dfe76d5f9d3129386926b4\u003E'
+  apiKey: '',
+  authDomain: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '',
+  measurementId: ''
 });
 
 // Initialize authService
@@ -47,6 +51,7 @@ const getIdToken = () => {
 const fetchWithAuthorization = async (original, idToken) => {
   // Clone headers as request headers are immutable.
   const headers = new Headers();
+  // eslint-disable-next-line prefer-const
   for (let entry of original.headers.entries()) {
     headers.append(entry[0], entry[1]);
   }
@@ -99,12 +104,12 @@ self.addEventListener('fetch', (event) => {
     getIdToken().then((idToken) =>
       idToken
         ? // if the token was retrieved we attempt an authorized fetch
-          // if anything goes wrong we fall back to the original request
-          fetchWithAuthorization(event.request, idToken).catch(() =>
-            fetch(event.request)
-          )
-        : // otherwise we return a fetch of the original request directly
+      // if anything goes wrong we fall back to the original request
+        fetchWithAuthorization(event.request, idToken).catch(() =>
           fetch(event.request)
+        )
+        : // otherwise we return a fetch of the original request directly
+        fetch(event.request)
     )
   );
 });
